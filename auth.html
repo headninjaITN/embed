@@ -154,17 +154,23 @@
             // Listen for existing sessions on page refresh
             onAuthStateChanged(auth, (firebaseUser) => {
                 if (firebaseUser) {
-                    // Extract the provider (Google or Microsoft) from the saved session
-                    const providerId = firebaseUser.providerData.length > 0 
+                    // Extract the raw provider from the saved session
+                    const rawProvider = firebaseUser.providerData.length > 0 
                         ? firebaseUser.providerData[0].providerId 
                         : 'firebase';
+                    
+                    // Map the raw Firebase IDs to your clean formatting
+                    let cleanProvider = 'Unknown';
+                    if (rawProvider === 'google.com') cleanProvider = 'Google';
+                    else if (rawProvider === 'microsoft.com') cleanProvider = 'M365';
+                    else cleanProvider = rawProvider;
                     
                     // Push the restored user directly into our Voiceflow logic
                     handleAuthStateChanged({
                         uid: firebaseUser.uid,
                         displayName: firebaseUser.displayName,
                         email: firebaseUser.email,
-                        provider: providerId
+                        provider: cleanProvider
                     });
                 }
             });
