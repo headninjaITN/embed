@@ -77,7 +77,9 @@
         
         // Voiceflow Configuration
         const VOICEFLOW_PROJECT_ID = '6acaa2745fadc33e2b04ee0f'; 
-        const VOICEFLOW_VERSION_ID = 'production'; // Use 'development' if testing un-published flows
+        
+        // Changed to 'development' to load your current Voiceflow canvas!
+        const VOICEFLOW_VERSION_ID = 'development'; 
 
         // Firebase Configuration (Used for both Google and Microsoft)
         const firebaseConfig = {
@@ -159,7 +161,7 @@
             script.onload = function() {
                 window.voiceflow.chat.load({
                     verify: { projectID: VOICEFLOW_PROJECT_ID },
-                    versionID: VOICEFLOW_VERSION_ID,
+                    versionID: 'production', // Reverted back to production
                     userID: user.uid, // Unified Firebase UID ensures consistent sessions
                     render: {
                         mode: 'embedded',
@@ -173,8 +175,6 @@
                                 userName: user.displayName,
                                 email: user.email,
                                 authProvider: user.provider
-                                // Note: We are no longer passing complex access tokens here
-                                // as API tasks are offloaded to specialized VF playbooks.
                             }
                         }
                     }
