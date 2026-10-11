@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M365 Voiceflow Gateway</title>
+    <title>Ayane Gateway</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom transitions for smooth UI switching */
@@ -159,38 +159,41 @@
 
         function loadVoiceflowWidget(user) {
             if (document.getElementById('voiceflow-script')) return;
-            console.log(`Initializing Voiceflow for ${user.provider} user...`);
+            console.log(`Initializing Voiceflow for ${user.provider} user:`, user.uid);
 
-            // Use the exact Voiceflow IIFE snippet
-            (function(d, t) {
-                var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-                v.id = 'voiceflow-script'; // Kept so the sign-out function can still remove it
-                v.onload = function() {
-                    window.voiceflow.chat.load({
-                        verify: { projectID: '6acaa2745fadc33e2b04ee0f' },
-                        url: 'https://general-runtime.voiceflow.com',
-                        voice: {
-                            url: 'https://runtime-api.voiceflow.com'
-                        },
-                        userID: user.uid,
-                        autostart: true,
-                        // Only keeping the launch event as requested
-                        launch: {
-                            event: {
-                                type: 'launch',
-                                payload: {
-                                    userName: user.displayName,
-                                    email: user.email,
-                                    authProvider: user.provider
-                                }
+            const script = document.createElement('script');
+            script.id = 'voiceflow-script';
+            // CRITICAL FIX: Changed to widget-next based on your snippet
+            script.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+            script.type = "text/javascript";
+            
+            script.onload = function() {
+                window.voiceflow.chat.load({
+                    verify: { projectID: VOICEFLOW_PROJECT_ID },
+                    url: 'https://general-runtime.voiceflow.com',
+                    voice: {
+                        url: 'https://runtime-api.voiceflow.com'
+                    },
+                    versionID: 'production', // Keep this explicitly set to production
+                    userID: user.uid, // Unified Firebase UID ensures consistent sessions
+                    // The 'render' block has been removed so it defaults to a popover widget
+                    autostart: true,
+                    launch: {
+                        event: {
+                            type: 'launch',
+                            payload: {
+                                userName: user.displayName,
+                                email: user.email,
+                                authProvider: user.provider
                             }
                         }
-                    });
-                };
-                v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs'; 
-                v.type = 'text/javascript'; 
-                s.parentNode.insertBefore(v, s);
-            })(document, 'script');
+                    }
+                }).then(() => {
+                    // Force the widget to open automatically without user click
+                    window.voiceflow.chat.open();
+                });
+            };
+            document.body.appendChild(script);
         }
 
         function removeVoiceflowWidget() {
