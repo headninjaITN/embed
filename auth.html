@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayane 🌸 Gateway</title>
+    <title>M365 Voiceflow Gateway</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom transitions for smooth UI switching */
@@ -172,6 +172,8 @@
                         voice: {
                             url: 'https://runtime-api.voiceflow.com'
                         },
+                        userID: user.uid,
+                        autostart: true,
                         // Only keeping the launch event as requested
                         launch: {
                             event: {
