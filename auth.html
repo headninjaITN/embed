@@ -156,11 +156,6 @@
             errorMessage.classList.remove('hidden-view');
             setTimeout(() => errorMessage.classList.add('hidden-view'), 5000);
         }
-
-        function loadVoiceflowWidget(user) {
-            if (document.getElementById('voiceflow-script')) return;
-            console.log(`Initializing Voiceflow for ${user.provider} user...`);
-
             // Use the exact Voiceflow IIFE snippet
             (function(d, t) {
                 var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
@@ -189,20 +184,6 @@
                 v.type = 'text/javascript'; 
                 s.parentNode.insertBefore(v, s);
             })(document, 'script');
-        }
-
-        function removeVoiceflowWidget() {
-            const script = document.getElementById('voiceflow-script');
-            if (script) script.remove();
-            
-            const vfContainerElement = document.getElementById('vf-container');
-            if (vfContainerElement) vfContainerElement.innerHTML = '';
-            
-            const vfElements = document.querySelectorAll('#voiceflow-chat, div[class*="vfrc"]');
-            vfElements.forEach(el => el.remove());
-            
-            if (window.voiceflow) delete window.voiceflow;
-        }
 
         function handleAuthStateChanged(user) {
             activeUserSession = user;
