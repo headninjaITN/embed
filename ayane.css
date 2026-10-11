@@ -1,4 +1,80 @@
-.vfrc-chat { background: #17102a; }
-.vfrc-header { background: #0f0a1a; }
-.vfrc-footer { background: #0f0a1a; }
-.vfrc-chat-input { background: #201741; }
+/* =========================================================
+   AYANE 🌸 VOICEFLOW DARK MODE OVERRIDES
+   ========================================================= */
+
+/* 1. Main Chat Background & Text */
+.vfrc-chat, 
+.vfrc-widget--chat {
+    background-color: #0f172a !important; /* Matches your Slate-900 background */
+    font-family: inherit !important;
+}
+
+/* 2. Header Area */
+.vfrc-header {
+    background-color: #0f172a !important;
+    border-bottom: 1px solid #1e293b !important; /* Slate-800 border */
+}
+.vfrc-header--title {
+    color: #f8fafc !important; /* Crisp white */
+}
+.vfrc-header--description {
+    color: #94a3b8 !important; /* Slate-400 */
+}
+
+/* 3. Ayane's Chat Bubbles (System Response) */
+/* Fixes the stark white bubbles in your screenshot */
+.vfrc-system-response .vfrc-message {
+    background-color: #1e293b !important; /* Soft Slate-800 */
+    color: #f1f5f9 !important; /* Off-white text for readability */
+    border: 1px solid #334155 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 4. User Chat Bubbles */
+.vfrc-user-response .vfrc-message {
+    background-color: #ec4899 !important; /* Ayane Pink! */
+    color: #ffffff !important;
+}
+
+/* 5. Suggestion Buttons (Troubleshoot, Account Help, etc.) */
+/* Fixes the light purple/white mismatched pills */
+.vfrc-button {
+    background-color: #0f172a !important;
+    color: #ec4899 !important; /* Pink text */
+    border: 1px solid #ec4899 !important;
+    border-radius: 9999px !important;
+    transition: all 0.2s ease !important;
+}
+.vfrc-button:hover {
+    background-color: #ec4899 !important;
+    color: #ffffff !important;
+}
+
+/* 6. Footer & Input Area */
+/* Fixes the massive white block at the bottom of your image */
+.vfrc-footer {
+    background-color: #0f172a !important;
+    border-top: none !important;
+    padding-bottom: 15px !important;
+}
+
+/* The actual typing field */
+.vfrc-chat-input {
+    background-color: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-radius: 9999px !important;
+}
+.vfrc-chat-input textarea {
+    color: #f1f5f9 !important;
+}
+.vfrc-chat-input textarea::placeholder {
+    color: #64748b !important;
+}
+
+/* 7. Input Icons (Send button, attachments) */
+.vfrc-chat-input--button svg {
+    color: #ec4899 !important;
+}
+.vfrc-chat-input--button:hover {
+    background-color: #334155 !important;
+}
