@@ -120,7 +120,7 @@
         // ==========================================
         
         const VOICEFLOW_PROJECT_ID = '6acaa2745fadc33e2b04ee0f'; 
-        const VOICEFLOW_VERSION_ID = 'development'; 
+        const VOICEFLOW_VERSION_ID = 'production'; 
 
         const firebaseConfig = {
             apiKey: "AIzaSyAn9ytwWmsLF0lE8sa01b574CqBaVBgss4",
@@ -261,6 +261,9 @@
                     url: 'https://general-runtime.voiceflow.com',
                     voice: {
                         url: 'https://runtime-api.voiceflow.com'
+                    },
+                    assistant: {
+                        stylesheet: 'https://chat.itninjas.tech/ayane.css'
                     },
                     versionID: VOICEFLOW_VERSION_ID,
                     userID: user.uid, 
