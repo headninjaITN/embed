@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M365 Voiceflow Gateway</title>
+    <title>M365 test Gateway</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom transitions for smooth UI switching */
@@ -59,8 +59,16 @@
         <p id="error-message" class="text-red-500 text-sm mt-2 hidden-view"></p>
     </div>
 
-    <!-- FULL SCREEN VOICEFLOW CONTAINER -->
-    <div id="vf-container" class="hidden-view fixed inset-0 w-full h-full bg-white z-40"></div>
+    <!-- LOGGED IN DASHBOARD CONTAINER -->
+    <div id="vf-container" class="hidden-view fixed inset-0 w-full h-full bg-slate-50 flex flex-col items-center justify-center z-40">
+        <div class="text-center">
+            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h2 class="text-3xl font-bold text-slate-800 mb-3">Authentication Successful</h2>
+            <p class="text-slate-500 text-lg max-w-md mx-auto">Your session is secure. Your personalized assistant is opening in the corner of your screen.</p>
+        </div>
+    </div>
 
     <!-- FLOATING AUTH CONTROLS -->
     <div id="auth-controls" class="hidden-view fixed top-4 right-4 z-50">
@@ -168,10 +176,7 @@
                     },
                     versionID: 'production', // Keep this explicitly set to production
                     userID: user.uid, // Unified Firebase UID ensures consistent sessions
-                    render: {
-                        mode: 'embedded',
-                        target: document.getElementById('vf-container')
-                    },
+                    // The 'render' block has been removed so it defaults to a popover widget
                     autostart: true,
                     launch: {
                         event: {
@@ -183,6 +188,9 @@
                             }
                         }
                     }
+                }).then(() => {
+                    // Force the widget to open automatically without user click
+                    window.voiceflow.chat.open();
                 });
             };
             document.body.appendChild(script);
