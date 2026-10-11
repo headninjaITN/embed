@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayane Gateway</title>
+    <title>M365 Gateway</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom transitions for smooth UI switching */
@@ -87,7 +87,7 @@
         const VOICEFLOW_PROJECT_ID = '6acaa2745fadc33e2b04ee0f'; 
         
         // Changed to 'development' to load your current Voiceflow canvas!
-        const VOICEFLOW_VERSION_ID = 'production'; 
+        const VOICEFLOW_VERSION_ID = 'development'; 
 
         // Firebase Configuration (Used for both Google and Microsoft)
         const firebaseConfig = {
@@ -156,6 +156,11 @@
             errorMessage.classList.remove('hidden-view');
             setTimeout(() => errorMessage.classList.add('hidden-view'), 5000);
         }
+
+        function loadVoiceflowWidget(user) {
+            if (document.getElementById('voiceflow-script')) return;
+            console.log(`Initializing Voiceflow for ${user.provider} user...`);
+
             // Use the exact Voiceflow IIFE snippet
             (function(d, t) {
                 var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
@@ -184,6 +189,20 @@
                 v.type = 'text/javascript'; 
                 s.parentNode.insertBefore(v, s);
             })(document, 'script');
+        }
+
+        function removeVoiceflowWidget() {
+            const script = document.getElementById('voiceflow-script');
+            if (script) script.remove();
+            
+            const vfContainerElement = document.getElementById('vf-container');
+            if (vfContainerElement) vfContainerElement.innerHTML = '';
+            
+            const vfElements = document.querySelectorAll('#voiceflow-chat, div[class*="vfrc"]');
+            vfElements.forEach(el => el.remove());
+            
+            if (window.voiceflow) delete window.voiceflow;
+        }
 
         function handleAuthStateChanged(user) {
             activeUserSession = user;
