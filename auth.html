@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayane Gateway</title>
+    <title>Ayane 🌸 01</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {},
+            },
+        }
+    </script>
     <style>
         /* Custom transitions for smooth UI switching */
         .fade-enter { opacity: 0; transform: translateY(10px); }
@@ -13,23 +21,70 @@
         .fade-exit-active { opacity: 0; transition: opacity 300ms; }
         .hidden-view { display: none !important; }
     </style>
+    <!-- Prevent FOUC (Flash of unstyled content) for Dark Mode -->
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
-<body class="bg-slate-50 min-h-screen font-sans text-slate-800 flex items-center justify-center p-4">
+<body class="bg-slate-50 dark:bg-slate-900 min-h-screen font-sans text-slate-800 dark:text-slate-200 flex items-center justify-center p-4 transition-colors duration-300">
+
+    <!-- PERSISTENT TOP NAVIGATION -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-3">
+        
+        <!-- Dark Mode Toggle -->
+        <button id="theme-toggle" class="p-2.5 bg-white/90 dark:bg-slate-800/90 backdrop-blur shadow-md text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors focus:ring-4 focus:ring-slate-200 dark:focus:ring-slate-700 focus:outline-none">
+            <!-- Dark icon (Moon) -->
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <!-- Light icon (Sun) -->
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        </button>
+
+        <!-- Auth Controls Menu (Hidden during login) -->
+        <div id="auth-controls" class="relative hidden-view">
+            <button id="menu-trigger-btn" class="px-4 py-2 text-sm bg-white/90 dark:bg-slate-800/90 backdrop-blur shadow-md text-slate-700 dark:text-slate-200 rounded-lg font-medium border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors focus:ring-4 focus:ring-slate-200 dark:focus:ring-slate-700 focus:outline-none flex items-center gap-2">
+                Menu
+                <svg class="w-4 h-4 text-slate-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            
+            <!-- Dropdown Content -->
+            <div id="auth-dropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 hidden transform opacity-0 scale-95 transition-all duration-200 origin-top-right overflow-hidden">
+                <div class="py-1">
+                    <!-- Tech Dojo Link -->
+                    <a href="https://techdojo.example.com" target="_blank" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                        <svg class="w-4 h-4 text-indigo-500 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        Tech Dojo
+                    </a>
+                    
+                    <div class="h-px bg-slate-100 dark:bg-slate-700 my-1"></div>
+                    
+                    <!-- Sign Out Button -->
+                    <button id="signout-btn" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-left">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- LOGIN CONTAINER -->
-    <div id="login-container" class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center transition-all duration-500">
+    <div id="login-container" class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-transparent dark:border-slate-700 p-8 max-w-md w-full text-center transition-all duration-500 relative z-10">
         <div class="mb-8">
-            <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors duration-300">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                 </svg>
             </div>
-            <h1 class="text-2xl font-bold text-slate-900 mb-2">Welcome Back</h1>
-            <p class="text-slate-500">Sign in to access your personalized assistant.</p>
+            <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-2 transition-colors duration-300">Welcome Back</h1>
+            <p class="text-slate-500 dark:text-slate-400 transition-colors duration-300">Sign in to access your personalized assistant.</p>
         </div>
 
         <div class="space-y-3">
-            <button id="google-signin-btn" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-300 rounded-lg px-6 py-3 text-slate-700 font-medium hover:bg-slate-50 transition-colors focus:ring-4 focus:ring-slate-100 focus:outline-none">
+            <button id="google-signin-btn" class="w-full flex items-center justify-center gap-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-6 py-3 text-slate-700 dark:text-slate-200 font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors focus:ring-4 focus:ring-slate-100 dark:focus:ring-slate-700 focus:outline-none">
                 <svg class="w-5 h-5" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
                     <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
@@ -39,7 +94,7 @@
                 Sign in with Google
             </button>
 
-            <button id="m365-signin-btn" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-300 rounded-lg px-6 py-3 text-slate-700 font-medium hover:bg-slate-50 transition-colors focus:ring-4 focus:ring-blue-100 focus:outline-none">
+            <button id="m365-signin-btn" class="w-full flex items-center justify-center gap-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-6 py-3 text-slate-700 dark:text-slate-200 font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:outline-none">
                 <svg class="w-5 h-5" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
                     <rect x="1" y="1" width="9" height="9" fill="#f25022"/>
                     <rect x="11" y="1" width="9" height="9" fill="#7fba00"/>
@@ -51,31 +106,23 @@
         </div>
         
         <div class="relative flex py-5 items-center">
-            <div class="flex-grow border-t border-slate-200"></div>
-            <span class="flex-shrink-0 mx-4 text-slate-400 text-sm">Secured Gateway</span>
-            <div class="flex-grow border-t border-slate-200"></div>
+            <div class="flex-grow border-t border-slate-200 dark:border-slate-700 transition-colors duration-300"></div>
+            <span class="flex-shrink-0 mx-4 text-slate-400 dark:text-slate-500 text-sm transition-colors duration-300">Secured Gateway</span>
+            <div class="flex-grow border-t border-slate-200 dark:border-slate-700 transition-colors duration-300"></div>
         </div>
 
-        <p id="error-message" class="text-red-500 text-sm mt-2 hidden-view"></p>
+        <p id="error-message" class="text-red-500 dark:text-red-400 text-sm mt-2 hidden-view"></p>
     </div>
 
     <!-- LOGGED IN DASHBOARD CONTAINER -->
-    <div id="vf-container" class="hidden-view fixed inset-0 w-full h-full bg-slate-50 flex flex-col items-center justify-center z-40">
-        <div class="text-center">
-            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+    <div id="vf-container" class="hidden-view fixed inset-0 w-full h-full bg-slate-50 dark:bg-slate-900 flex flex-col items-center justify-center z-0 transition-colors duration-300">
+        <div class="text-center relative z-10">
+            <div class="w-20 h-20 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm transition-colors duration-300">
                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
-            <h2 class="text-3xl font-bold text-slate-800 mb-3">Authentication Successful</h2>
-            <p class="text-slate-500 text-lg max-w-md mx-auto">Your session is secure. Your personalized assistant is opening in the corner of your screen.</p>
+            <h2 class="text-3xl font-bold text-slate-800 dark:text-white mb-3 transition-colors duration-300">Authentication Successful</h2>
+            <p class="text-slate-500 dark:text-slate-400 text-lg max-w-md mx-auto transition-colors duration-300">Your session is secure. Your personalized assistant is opening in the corner of your screen.</p>
         </div>
-    </div>
-
-    <!-- FLOATING AUTH CONTROLS -->
-    <div id="auth-controls" class="hidden-view fixed top-4 right-4 z-50">
-        <button id="signout-btn" class="px-4 py-2 bg-white/90 backdrop-blur shadow-md text-slate-700 rounded-lg font-medium border border-slate-200 hover:bg-slate-50 transition-colors focus:ring-4 focus:ring-slate-200 focus:outline-none flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-            Sign Out
-        </button>
     </div>
 
     <script type="module">
@@ -83,13 +130,9 @@
         // 1. CONFIGURATION & API KEYS
         // ==========================================
         
-        // Voiceflow Configuration
         const VOICEFLOW_PROJECT_ID = '6acaa2745fadc33e2b04ee0f'; 
-        
-        // Changed to 'development' to load your current Voiceflow canvas!
         const VOICEFLOW_VERSION_ID = 'development'; 
 
-        // Firebase Configuration (Used for both Google and Microsoft)
         const firebaseConfig = {
             apiKey: "AIzaSyAn9ytwWmsLF0lE8sa01b574CqBaVBgss4",
             authDomain: "vf-auth-8eae8.firebaseapp.com",
@@ -108,7 +151,8 @@
             signInWithPopup, 
             GoogleAuthProvider, 
             OAuthProvider, 
-            signOut as firebaseSignOut 
+            signOut as firebaseSignOut,
+            onAuthStateChanged
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
         let auth;
@@ -117,6 +161,24 @@
         try {
             const app = initializeApp(firebaseConfig);
             auth = getAuth(app);
+            
+            // Listen for existing sessions on page refresh
+            onAuthStateChanged(auth, (firebaseUser) => {
+                if (firebaseUser) {
+                    // Extract the provider (Google or Microsoft) from the saved session
+                    const providerId = firebaseUser.providerData.length > 0 
+                        ? firebaseUser.providerData[0].providerId 
+                        : 'firebase';
+                    
+                    // Push the restored user directly into our Voiceflow logic
+                    handleAuthStateChanged({
+                        uid: firebaseUser.uid,
+                        displayName: firebaseUser.displayName,
+                        email: firebaseUser.email,
+                        provider: providerId
+                    });
+                }
+            });
         } catch (err) {
             console.warn("Firebase not initialized. Check your config:", err);
         }
@@ -125,6 +187,10 @@
         const loginContainer = document.getElementById('login-container');
         const vfContainer = document.getElementById('vf-container');
         const authControls = document.getElementById('auth-controls');
+        
+        const menuTriggerBtn = document.getElementById('menu-trigger-btn');
+        const authDropdown = document.getElementById('auth-dropdown');
+        
         const googleSignInBtn = document.getElementById('google-signin-btn');
         const m365SignInBtn = document.getElementById('m365-signin-btn');
         const signOutBtn = document.getElementById('signout-btn');
@@ -134,8 +200,72 @@
         const originalM365BtnHTML = m365SignInBtn.innerHTML;
 
         // ==========================================
-        // 3. UI & VOICEFLOW LOGIC
+        // 3. UI & LOGIC
         // ==========================================
+
+        // --- Dark Mode Logic ---
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+
+        // Set initial icon
+        if (document.documentElement.classList.contains('dark')) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+
+        // --- Dropdown Menu Logic ---
+        menuTriggerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (authDropdown.classList.contains('hidden')) {
+                authDropdown.classList.remove('hidden');
+                setTimeout(() => {
+                    authDropdown.classList.remove('opacity-0', 'scale-95');
+                    authDropdown.classList.add('opacity-100', 'scale-100');
+                }, 10);
+            } else {
+                closeDropdown();
+            }
+        });
+
+        function closeDropdown() {
+            authDropdown.classList.remove('opacity-100', 'scale-100');
+            authDropdown.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => authDropdown.classList.add('hidden'), 200);
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuTriggerBtn.contains(e.target) && !authDropdown.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // --- View Controller ---
         function showView(view) {
             if (view === 'login') {
                 vfContainer.classList.add('hidden-view');
@@ -163,7 +293,6 @@
 
             const script = document.createElement('script');
             script.id = 'voiceflow-script';
-            // CRITICAL FIX: Changed to widget-next based on your snippet
             script.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
             script.type = "text/javascript";
             
@@ -174,9 +303,8 @@
                     voice: {
                         url: 'https://runtime-api.voiceflow.com'
                     },
-                    versionID: 'production', // Keep this explicitly set to production
-                    userID: user.uid, // Unified Firebase UID ensures consistent sessions
-                    // The 'render' block has been removed so it defaults to a popover widget
+                    versionID: VOICEFLOW_VERSION_ID,
+                    userID: user.uid, 
                     autostart: true,
                     launch: {
                         event: {
@@ -189,7 +317,6 @@
                         }
                     }
                 }).then(() => {
-                    // Force the widget to open automatically without user click
                     window.voiceflow.chat.open();
                 });
             };
@@ -199,9 +326,6 @@
         function removeVoiceflowWidget() {
             const script = document.getElementById('voiceflow-script');
             if (script) script.remove();
-            
-            const vfContainerElement = document.getElementById('vf-container');
-            if (vfContainerElement) vfContainerElement.innerHTML = '';
             
             const vfElements = document.querySelectorAll('#voiceflow-chat, div[class*="vfrc"]');
             vfElements.forEach(el => el.remove());
@@ -218,9 +342,9 @@
             } else {
                 showView('login');
                 removeVoiceflowWidget();
+                closeDropdown(); // Reset menu state
             }
             
-            // Reset buttons
             googleSignInBtn.disabled = false;
             googleSignInBtn.innerHTML = originalGoogleBtnHTML;
             m365SignInBtn.disabled = false;
@@ -231,10 +355,9 @@
         // 4. AUTHENTICATION HANDLERS
         // ==========================================
 
-        // --- GOOGLE SIGN IN ---
         googleSignInBtn.addEventListener('click', async () => {
             googleSignInBtn.disabled = true;
-            googleSignInBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Connecting to Google...`;
+            googleSignInBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Connecting to Google...`;
 
             try {
                 const provider = new GoogleAuthProvider();
@@ -254,24 +377,18 @@
             }
         });
 
-        // --- MICROSOFT 365 SIGN IN (VIA FIREBASE) ---
         m365SignInBtn.addEventListener('click', async () => {
             m365SignInBtn.disabled = true;
-            m365SignInBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Connecting to M365...`;
+            m365SignInBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Connecting to M365...`;
 
             try {
-                // We use OAuthProvider explicitly targeting Microsoft
                 const provider = new OAuthProvider('microsoft.com');
-                
-                // Optional: Force user to select an account if they have multiple
-                provider.setCustomParameters({
-                    prompt: 'select_account'
-                });
+                provider.setCustomParameters({ prompt: 'select_account' });
                 
                 const result = await signInWithPopup(auth, provider);
                 
                 handleAuthStateChanged({
-                    uid: result.user.uid, // Unified Firebase UID!
+                    uid: result.user.uid,
                     displayName: result.user.displayName,
                     email: result.user.email,
                     provider: 'microsoft.com'
@@ -284,21 +401,19 @@
             }
         });
 
-        // --- SIGN OUT ---
         signOutBtn.addEventListener('click', async () => {
-            signOutBtn.disabled = true;
-            signOutBtn.textContent = 'Signing out...';
+            const originalText = signOutBtn.innerHTML;
+            signOutBtn.innerHTML = `<svg class="animate-spin w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Signing out...`;
             
             if (activeUserSession) {
                 try {
-                    await firebaseSignOut(auth); // Firebase handles sign out for both providers uniformly
+                    await firebaseSignOut(auth);
                 } catch (error) {
                     console.error("Logout error", error);
                 }
             }
             
-            signOutBtn.disabled = false;
-            signOutBtn.textContent = 'Sign Out';
+            signOutBtn.innerHTML = originalText;
             handleAuthStateChanged(null);
         });
 
