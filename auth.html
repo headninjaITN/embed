@@ -262,9 +262,7 @@
                     voice: {
                         url: 'https://runtime-api.voiceflow.com'
                     },
-                    assistant: {
-                        stylesheet: 'https://chat.itninjas.tech/ayane.css'
-                    },
+                    //assistant: {stylesheet: 'https://chat.itninjas.tech/ayane.css'},
                     versionID: VOICEFLOW_VERSION_ID,
                     userID: user.uid, 
                     autostart: true,
@@ -328,7 +326,7 @@
                     uid: result.user.uid,
                     displayName: result.user.displayName,
                     email: result.user.email,
-                    provider: 'google'
+                    provider: 'Google'
                 });
             } catch (error) {
                 console.error(error);
@@ -352,7 +350,7 @@
                     uid: result.user.uid,
                     displayName: result.user.displayName,
                     email: result.user.email,
-                    provider: 'microsoft.com'
+                    provider: 'M365'
                 });
             } catch (error) {
                 console.error(error);
