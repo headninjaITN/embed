@@ -155,13 +155,18 @@
 
             const script = document.createElement('script');
             script.id = 'voiceflow-script';
-            script.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
+            // CRITICAL FIX: Changed to widget-next based on your snippet
+            script.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
             script.type = "text/javascript";
             
             script.onload = function() {
                 window.voiceflow.chat.load({
                     verify: { projectID: VOICEFLOW_PROJECT_ID },
-                    versionID: 'production', // Reverted back to production
+                    url: 'https://general-runtime.voiceflow.com',
+                    voice: {
+                        url: 'https://runtime-api.voiceflow.com'
+                    },
+                    versionID: 'production', // Keep this explicitly set to production
                     userID: user.uid, // Unified Firebase UID ensures consistent sessions
                     render: {
                         mode: 'embedded',
