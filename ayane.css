@@ -1,5 +1,5 @@
 /* Increase the size of the agent portrait globally */
 .vfrc-assistant-info--avatar {
-    width: 150px !important;  /* Adjust to your preferred size */
-    height: 150px !important;
+    width: 100px !important;  /* Adjust to your preferred size */
+    height: 100px !important;
 }
