@@ -1,4 +1,3 @@
-.vfrc-launcher {
-  left: 50% !important;
+.vfrc-button {
   transform: translateX(-50%) !important;
 }
